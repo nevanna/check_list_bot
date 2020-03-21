@@ -6,11 +6,17 @@ import datetime
 
 from enum import Enum
 
-class Status(Enum):
-	is_undifined = 0
-	is_open = 1
-	is_closed = 2
-	in_progress = 3
+status = {"undifined" : 0,
+			"open" : 1,
+			"progress" : 2,
+			"closed" : 3,
+			}
+
+# class Status(Enum):
+# 	is_undifined = 0
+# 	is_open = 1
+# 	is_closed = 2
+# 	in_progress = 3
 
 class Task(object):
 	def __init__(self, arg, idx, author):
@@ -22,7 +28,7 @@ class Task(object):
 		self.assignee_to = []
 		self.author = [str(author.name) + "#" + str(author.discriminator)]
 		self.date_of_creation = {}
-		# self.status = Status.is_undifined
+		self.status = status["undifined"]
 		self.date_of_closing = {}
 		s = ""
 		for el in arg:
@@ -30,7 +36,7 @@ class Task(object):
 		print(s)
 		self._parse_str(s)
 		self.set_date_of_creation()
-		# self.set_status(Status.is_open)
+		self.set_status("open")
 		print(idx)
 		self.set_id_nb(idx)
 		
@@ -39,13 +45,13 @@ class Task(object):
 		# params = [self.msg, self.version, self.labels, self.assignee_to, self.status,]
 		print(params)
 
-	def set_status(self,status):
-		self.status = status
+	def set_status(self,st):
+		self.status = status[st]
 	def get_status(self):
 		return self.status
 	
 	def set_date_of_creation(self):
-		self.date_of_creation = datetime.datetime.now()
+		self.date_of_creation = self.time_dict(datetime.datetime.now())
 		pass
 	def get_date_of_creatino(self):
 		return self.date_of_creation
@@ -56,8 +62,8 @@ class Task(object):
 		return self.labels
 	
 	def close_task(self):
-		self.status = Status.is_closed
-		self.date_of_closing = datetime.datetime.now()
+		self.status = status["closed"]
+		self.date_of_closing = self.time_dict(datetime.datetime.now())
 	
 	def set_author(self, who):
 		self.author = who
@@ -122,7 +128,25 @@ class Task(object):
 		"assignee_to": self.assignee_to,
 		"author": self.author,
 		"date_of_creation": self.date_of_creation,
-		# "status": self.status,
+		"status": self.status,
 		"date_of_closing": self.date_of_closing }
 		return dic
 
+	def time_dict(self, date_time):
+		print(date_time)
+		print(type(date_time))
+		if not date_time:
+			return{"year": 0,
+			"month": 0,
+			"day": 0,
+			"hour":0, 
+			"minute": 0,
+			"second": 0}
+		else:
+			return {"year": date_time.year,
+			"month": date_time.month,
+			"day": date_time.day,
+			"hour":date_time.hour, 
+			"minute": date_time.minute,
+			"second": date_time.second}
+		# year, month, day, hour=0, minute=0, second=0, microsecond=0, tzinfo=None

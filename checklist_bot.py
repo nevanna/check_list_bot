@@ -12,6 +12,12 @@ TOKEN = CFG.TOKEN
 
 
 bot = commands.Bot(command_prefix='!')
+bot.remove_command("help")
+
+@bot.event
+async def on_ready():
+	print("Greetings!")
+
 # create new task for version
 @bot.command(pass_context=True)
 async def test(ctx, *arg):
@@ -32,5 +38,22 @@ async def test(ctx, *arg):
 async def reg(ctx, *, arg):
 	print(ctx, arg)
 	await ctx.send("registration")
+
+
+
+
+help_row = """
+	```$ - for version and titels for boards
+@ - who should complete a task
+# - labels and hashtags```
+	"""
+@bot.command(pass_context=True)
+async def h(ctx):
+	await ctx.send(help_row)
+
+@bot.command(pass_context=True)
+async def help(ctx):
+	await ctx.send(help_row)
+
 
 bot.run(TOKEN)

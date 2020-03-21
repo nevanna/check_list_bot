@@ -32,11 +32,11 @@ class Storage(object):
 	def save_to_storage(self):
 		print(self.content)
 		print(type(self.content))
-	# 	with open(FD, "w") as f:
-	# # 	cool_data = json.dumps(data, separators=(',', ':'), sort_keys=True, indent=4)
-	# 		print("try save")
-	# 		print(self.content)
-	# 		json.dump(self.content, f)
+		with open(FD, "w") as f:
+	# 	cool_data = json.dumps(data, separators=(',', ':'), sort_keys=True, indent=4)
+			print("try save")
+			print(self.content)
+			json.dump(self.content, f)
 
 	def debug_send(self):
 		super_string = ""

@@ -4,3 +4,5 @@ CFG.py
 *.json
 *test*
 *.pyc
+.env
+/KEYS

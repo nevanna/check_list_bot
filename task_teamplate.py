@@ -2,7 +2,7 @@
 
 import sys
 import datetime
-
+from storage.storage import Storage
 
 from enum import Enum
 
@@ -19,14 +19,14 @@ status = {"undifined" : 0,
 # 	in_progress = 3
 
 class Task(object):
-	def __init__(self, arg, idx, author):
+	def __init__(self, arg, author):
 		print(author)
 		self.msg = ""
 		self.id_nb = 0
 		self.version = ""
 		self.labels = []
 		self.assignee_to = []
-		self.author = [str(author.name) + "#" + str(author.discriminator)]
+		self.author = [author]
 		self.date_of_creation = {}
 		self.status = status["undifined"]
 		self.date_of_closing = {}
@@ -37,8 +37,10 @@ class Task(object):
 		self._parse_str(s)
 		self.set_date_of_creation()
 		self.set_status("open")
-		print(idx)
-		self.set_id_nb(idx)
+		_task = self.get_task_as_dictionary()
+		st = Storage()
+		st.push_task(_task)
+		# self.set_id_nb(idx)
 		
 	def print_params(self):
 		params = [self.msg, self.id_nb, self.version, self.labels, self.assignee_to, self.author, self.date_of_creation, self.status, self.date_of_closing]
@@ -70,10 +72,11 @@ class Task(object):
 	def get_author(self):
 		return self.author
 	
-	def set_id_nb(self, idx):
-		self.id_nb = idx
-	def get_id_nb(self):
-		return self.id_nb	
+	# def set_id_nb(self, idx):
+	# 	self.id_nb = idx
+	
+	# def get_id_nb(self):
+	# 	return self.id_nb	
 	
 
 	def __extractor(self, s, i):
@@ -133,8 +136,6 @@ class Task(object):
 		return dic
 
 	def time_dict(self, date_time):
-		print(date_time)
-		print(type(date_time))
 		if not date_time:
 			return{"year": 0,
 			"month": 0,

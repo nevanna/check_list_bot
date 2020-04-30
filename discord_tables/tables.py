@@ -14,7 +14,7 @@ def get_inf_bar(data)->str:
 			a_str = "*author: "
 			for a in data["author"]:
 				a_str += a + " "
-			a_str+="*"
+			a_str = a_str[0 :(len(a_str) - 1):] + '*'
 			inf_bar.append(a_str)
 		if len(data["assignee_to"]) > 0:
 			to_str = "***assignee to: "
